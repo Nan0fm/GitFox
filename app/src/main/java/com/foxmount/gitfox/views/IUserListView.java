@@ -12,6 +12,7 @@ public interface IUserListView extends IView {
 
     void showListUser(List<GitUser> lgu);
     void showEmptyList();
+    void setTitle(String title);
 
 
 }

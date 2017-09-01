@@ -7,6 +7,7 @@ import android.os.Environment;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.bumptech.glide.Glide;
 import com.foxmount.gitfox.gitapi.ApiManager;
 import com.foxmount.gitfox.gitapi.GitApi;
 import com.foxmount.gitfox.templates.GitUser;
@@ -56,6 +57,8 @@ public class UserPresenter extends BasePresenter implements IUserPresenter {
         } else {
             dwld(user.getLogin(),user.getAvatar_url());
         }
+
+//        Glide.with(userView.ava).load(user.getAvatar_url()).into()
     }
 
     void dwld(final String name, String url){
@@ -86,7 +89,7 @@ public class UserPresenter extends BasePresenter implements IUserPresenter {
 
     private boolean writeResponseBodyToDisk(String name,ResponseBody body) {
         try {
-            // todo change the file location/name according to your needs
+            // todo change the file location
             File futureStudioIconFile = new File(Environment.getExternalStorageDirectory() + File.separator + name+".png");
 
             InputStream inputStream = null;

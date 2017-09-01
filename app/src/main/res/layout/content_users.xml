@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.foxmount.gitfox.UsersActivity"
-    tools:showIn="@layout/activity_users">
+    tools:showIn="@layout/activity_users"
+    android:background="@color/gr_bckgr">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvUser"

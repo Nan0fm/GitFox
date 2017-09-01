@@ -4,8 +4,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.foxmount.gitfox.R;
-import com.foxmount.gitfox.VHolders.UserVh;
+import com.foxmount.gitfox.vholders.UserVh;
 import com.foxmount.gitfox.presenters.UserPresenter;
 import com.foxmount.gitfox.templates.GitUser;
 
@@ -34,8 +35,9 @@ public class GitUserAdapter extends RecyclerView.Adapter<UserVh> {
     @Override
     public void onBindViewHolder(UserVh holder, int position) {
         UserPresenter  ulPresenter=new UserPresenter(holder);
-        ulPresenter.showUser(lgu.get(position));
-    }
+        if (position==0)Glide.with(holder.itemView).load(lgu.get(position).getAvatar_url()).into(holder.avatar);
+        else        ulPresenter.showUser(lgu.get(position));
+     }
 
     @Override
     public int getItemCount() {

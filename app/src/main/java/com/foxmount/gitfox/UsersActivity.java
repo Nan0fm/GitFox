@@ -1,11 +1,15 @@
 package com.foxmount.gitfox;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -59,23 +63,23 @@ public class UsersActivity extends AppCompatActivity implements IUserListView {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                makeRequest();
+//                makeRequest();
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
-
+        GridLayoutManager glm=new GridLayoutManager(this,2);
         LinearLayoutManager lManager = new LinearLayoutManager(this);
-        rv.setLayoutManager(lManager);
+        rv.setLayoutManager(glm);
 
-        makeRequest();
+//        makeRequest();
     }
 
 
-    void makeRequest() {
+    void makeRequest(String query) {
         GitApi ga = ApiManager.createService(GitApi.class);
 
-        Call<GitRespUser> callp = ga.searchUser("jake");
+        Call<GitRespUser> callp = ga.searchUser(query);
 
 
         callp.enqueue(new Callback<GitRespUser>() {
@@ -197,12 +201,39 @@ public class UsersActivity extends AppCompatActivity implements IUserListView {
             return false;
         }
     }
-
-
+    SearchView searchView;
+    MenuItem myActionMenuItem;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_users, menu);
+         myActionMenuItem = menu.findItem( R.id.search);
+
+        SearchManager searchManager =    (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) myActionMenuItem.getActionView();
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getComponentName()));
+         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                // Toast like print
+                makeRequest(query);
+
+                setTitle(query);
+
+                if( ! searchView.isIconified()) {
+                    searchView.setIconified(true);
+                }
+                myActionMenuItem.collapseActionView();
+                return false;
+            }
+            @Override
+            public boolean onQueryTextChange(String s) {
+                // UserFeedback.show( "SearchOnQueryTextChanged: " + s);
+                return false;
+            }
+        });
+
         return true;
     }
 
@@ -213,10 +244,10 @@ public class UsersActivity extends AppCompatActivity implements IUserListView {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        //noinspection SimplifiableIfStatement
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -254,5 +285,10 @@ public class UsersActivity extends AppCompatActivity implements IUserListView {
         List<GitUser> lgu=new ArrayList<>();
         guAdapter = new GitUserAdapter(lgu);
         rv.setAdapter(guAdapter);
+    }
+
+    @Override
+    public void setTitle(String title) {
+        getSupportActionBar().setTitle(title);
     }
 }
