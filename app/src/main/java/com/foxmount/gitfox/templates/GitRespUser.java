@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * Created by A on 31.08.2017.
  */
 
-public class GitRespUser {
+public class GitRespUser implements IMainTemplate {
 
     private static final String J_TOTAL_COUNT ="total_count";
     private static final String J_INCOMPL_RES ="incomplete_results";

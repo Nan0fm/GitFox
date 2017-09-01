@@ -22,8 +22,9 @@
             android:id="@+id/avatar"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/c"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/c" />
 
 
         <TextView
@@ -36,10 +37,10 @@
             android:textSize="20sp" />
 
         <TextView
-            android:layout_marginTop="4dp"
             android:id="@+id/score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:text="10389" />
 
 

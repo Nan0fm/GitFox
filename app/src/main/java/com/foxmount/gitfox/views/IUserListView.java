@@ -11,8 +11,16 @@ import java.util.List;
 public interface IUserListView extends IView {
 
     void showListUser(List<GitUser> lgu);
+
     void showEmptyList();
+
     void setTitle(String title);
+
+    void setHomeIcon(int id);
+
+    void clearSearch();
+
+    void clickSearch();
 
 
 }

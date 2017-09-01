@@ -9,5 +9,6 @@ public interface IView {
     void showProgress();
     void hideProgress();
     void showError(String error);
-    void navigateBack();
+    void clickHome();
+    void backPress();
 }

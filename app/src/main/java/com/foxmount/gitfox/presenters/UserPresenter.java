@@ -1,13 +1,10 @@
 package com.foxmount.gitfox.presenters;
 
-import android.app.Application;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
-import com.bumptech.glide.Glide;
 import com.foxmount.gitfox.gitapi.ApiManager;
 import com.foxmount.gitfox.gitapi.GitApi;
 import com.foxmount.gitfox.templates.GitUser;
@@ -28,7 +25,7 @@ import retrofit2.Response;
  * Created by A on 31.08.2017.
  */
 
-public class UserPresenter extends BasePresenter implements IUserPresenter {
+public class UserPresenter extends IBasePresenter implements IUserPresenter {
 
     private static final String BUNDLE_REPO_LIST_KEY = "BUNDLE_REPO_LIST_KEY";
 
