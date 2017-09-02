@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.foxmount.gitfox.R;
 import com.foxmount.gitfox.vholders.UserVh;
 import com.foxmount.gitfox.presenters.UserPresenter;
@@ -34,10 +36,17 @@ public class GitUserAdapter extends RecyclerView.Adapter<UserVh> {
 
     @Override
     public void onBindViewHolder(UserVh holder, int position) {
-        UserPresenter  ulPresenter=new UserPresenter(holder);
-        if (position==0)Glide.with(holder.itemView).load(lgu.get(position).getAvatar_url()).into(holder.avatar);
-        else        ulPresenter.showUser(lgu.get(position));
-     }
+        UserPresenter ulPresenter = new UserPresenter(holder);
+//        if (position==0)
+        RequestOptions requestOptions = new RequestOptions();
+        requestOptions.diskCacheStrategy(DiskCacheStrategy.RESOURCE).error(R.drawable.c);
+        Glide.with(holder.itemView)
+                .asBitmap()
+                .load(lgu.get(position).getAvatar_url())
+                .apply(requestOptions)
+                .into(holder.avatar);
+    ulPresenter.showUser(lgu.get(position));
+    }
 
     @Override
     public int getItemCount() {

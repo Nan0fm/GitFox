@@ -1,5 +1,6 @@
 package com.foxmount.gitfox.vholders;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -16,7 +17,7 @@ import butterknife.ButterKnife;
  * Created by A on 31.08.2017.
  */
 
-public class UserVh extends RecyclerView.ViewHolder implements IUserView {
+public class UserVh extends RecyclerView.ViewHolder implements IUserView,View.OnClickListener {
     @BindView(R.id.avatar)
     public ImageView avatar;
     @BindView(R.id.name)
@@ -48,4 +49,14 @@ public class UserVh extends RecyclerView.ViewHolder implements IUserView {
     }
 
 
+    @Override
+    public void onClick(View v) {
+        int position = getAdapterPosition();
+        if(position != RecyclerView.NO_POSITION) {
+//            SpacePhoto spacePhoto = mSpacePhotos[position];
+//            Intent intent = new Intent(v.getContext(), SpacePhotoActivity.class);
+//            intent.putExtra(SpacePhotoActivity.EXTRA_SPACE_PHOTO, spacePhoto);
+//            startActivity(intent);
+        }
+    }
 }

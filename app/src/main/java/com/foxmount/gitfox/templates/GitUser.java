@@ -1,5 +1,8 @@
 package com.foxmount.gitfox.templates;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -7,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by A on 31.08.2017.
  */
 
-public class GitUser {
+public class GitUser implements Parcelable {
 
     private static final String J_LOGIN          ="login";
     private static final String J_ID             ="id";
@@ -91,5 +94,28 @@ public class GitUser {
 
     public double getScore() {
         return score;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+       dest.writeString(login);
+       dest.writeInt   (id);
+       dest.writeString(avatar_url);
+       dest.writeString(gravatar_id);
+       dest.writeString(url);
+       dest.writeString(html_url);
+       dest.writeString(followers_url);
+       dest.writeString(subscriptions_url);
+       dest.writeString(organizations_url);
+       dest.writeString(repos_url);
+       dest.writeString(received_events_url);
+       dest.writeString(type);
+       dest.writeDouble(score);
     }
 }

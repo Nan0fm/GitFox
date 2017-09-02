@@ -2,7 +2,9 @@ package com.foxmount.gitfox;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,9 +17,17 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.GlideBuilder;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.foxmount.gitfox.adapters.GitUserAdapter;
 import com.foxmount.gitfox.gitapi.ApiManager;
 import com.foxmount.gitfox.gitapi.GitApi;
@@ -66,7 +76,7 @@ public class UsersActivity extends AppCompatActivity implements IUserListView {
         setSupportActionBar(toolbar);
         ulPresenter = new UserListPresenter(this);
 
-        ulPresenter.onSetHomeIcon(R.drawable.ic_keyboard_backspace_white_24dp);
+        ulPresenter.onSetHomeIcon(R.drawable.ic_dashboard_white_24dp);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -80,6 +90,7 @@ public class UsersActivity extends AppCompatActivity implements IUserListView {
         GridLayoutManager glm = new GridLayoutManager(this, 2);
         LinearLayoutManager lManager = new LinearLayoutManager(this);
         rv.setLayoutManager(glm);
+
 
     }
 
@@ -175,6 +186,8 @@ public class UsersActivity extends AppCompatActivity implements IUserListView {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 // Toast like print
+                ulPresenter.onSetHomeIcon(R.drawable.ic_keyboard_backspace_white_24dp);
+
                 ulPresenter.onClickSearch(query, new Callback<GitRespUser>() {
                     @Override
                     public void onResponse(Call<GitRespUser> call, Response<GitRespUser> response) {
@@ -210,7 +223,8 @@ public class UsersActivity extends AppCompatActivity implements IUserListView {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                clearSearch();
+                ulPresenter.onClearSearch();
+
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -256,7 +270,7 @@ public class UsersActivity extends AppCompatActivity implements IUserListView {
 
     @Override
     public void setHomeIcon(int id) {
-        toolbar.setNavigationIcon(R.drawable.ic_keyboard_backspace_white_24dp);
+        toolbar.setNavigationIcon(id);
 
     }
 
@@ -264,6 +278,7 @@ public class UsersActivity extends AppCompatActivity implements IUserListView {
     public void clearSearch() {
         searchView.setQuery("", false);
         searchView.clearFocus();
+        ulPresenter.onSetHomeIcon(R.drawable.ic_dashboard_white_24dp);
 
     }
 

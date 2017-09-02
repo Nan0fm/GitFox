@@ -25,7 +25,7 @@ import retrofit2.Response;
  * Created by A on 31.08.2017.
  */
 
-public class UserPresenter extends IBasePresenter implements IUserPresenter {
+public class UserPresenter implements IUserPresenter {
 
     private static final String BUNDLE_REPO_LIST_KEY = "BUNDLE_REPO_LIST_KEY";
 
@@ -45,15 +45,16 @@ public class UserPresenter extends IBasePresenter implements IUserPresenter {
     public void showUser(GitUser user) {
 //        userView.setAvatar(user.getAvatar_url());
         userView.setName(user.getLogin());
-        File ava = new File(Environment.getExternalStorageDirectory() + File.separator +user.getLogin()+ ".png");
-        if (ava.exists()) {
-            BitmapFactory.Options options = new BitmapFactory.Options();
-            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-            Bitmap bitmap = BitmapFactory.decodeFile(ava.getPath(), options);
-            userView.setAvatar(bitmap);
-        } else {
-            dwld(user.getLogin(),user.getAvatar_url());
-        }
+        userView.setScore(String.valueOf(user.getScore()));
+//        File ava = new File(Environment.getExternalStorageDirectory() + File.separator +user.getLogin()+ ".png");
+//        if (ava.exists()) {
+//            BitmapFactory.Options options = new BitmapFactory.Options();
+//            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+//            Bitmap bitmap = BitmapFactory.decodeFile(ava.getPath(), options);
+//            userView.setAvatar(bitmap);
+//        } else {
+//            dwld(user.getLogin(),user.getAvatar_url());
+//        }
 
 //        Glide.with(userView.ava).load(user.getAvatar_url()).into()
     }
