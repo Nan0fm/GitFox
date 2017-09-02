@@ -33,15 +33,15 @@ public class GitUserAdapter extends RecyclerView.Adapter<UserVh> {
     private UserListPresenter ulPresenter;
     private List<GitUser> lgu;
 
-    private Callback<List<GitRepo>> callBack;
+
     private long dur = 300;
     private int lph = -1;
 
 
-    public GitUserAdapter(UserListPresenter ulPresenter, List<GitUser> lgu, Callback<List<GitRepo>> callBack) {
+    public GitUserAdapter(UserListPresenter ulPresenter, List<GitUser> lgu) {
         this.ulPresenter = ulPresenter;
         this.lgu = lgu;
-        this.callBack = callBack;
+
     }
 
     @Override
@@ -65,7 +65,7 @@ public class GitUserAdapter extends RecyclerView.Adapter<UserVh> {
         holder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ulPresenter.onClickUser(gu, callBack);
+                ulPresenter.onClickUser(gu);
             }
         });
 

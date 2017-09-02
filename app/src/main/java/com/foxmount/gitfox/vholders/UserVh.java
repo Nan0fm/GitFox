@@ -9,7 +9,10 @@ import android.widget.TextView;
 
 import com.foxmount.gitfox.R;
 import com.foxmount.gitfox.presenters.UserPresenter;
+import com.foxmount.gitfox.templates.GitRepo;
 import com.foxmount.gitfox.views.IUserView;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,6 +52,11 @@ public class UserVh extends RecyclerView.ViewHolder implements IUserView,View.On
     @Override
     public void setScore(String value) {
         score.setText(value);
+    }
+
+    @Override
+    public void showUserRepoList(List<GitRepo> listRepo) {
+       //tut nichego
     }
 
 

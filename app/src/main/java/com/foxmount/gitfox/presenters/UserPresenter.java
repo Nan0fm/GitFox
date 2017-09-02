@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.foxmount.gitfox.gitapi.ApiManager;
 import com.foxmount.gitfox.gitapi.GitApi;
+import com.foxmount.gitfox.templates.GitRepo;
 import com.foxmount.gitfox.templates.GitUser;
 import com.foxmount.gitfox.views.IUserView;
 
@@ -15,6 +16,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -46,20 +48,15 @@ public class UserPresenter implements IUserPresenter {
 //        userView.setAvatar(user.getAvatar_url());
         userView.setName(user.getLogin());
         userView.setScore(String.valueOf(user.getScore()));
-//        File ava = new File(Environment.getExternalStorageDirectory() + File.separator +user.getLogin()+ ".png");
-//        if (ava.exists()) {
-//            BitmapFactory.Options options = new BitmapFactory.Options();
-//            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-//            Bitmap bitmap = BitmapFactory.decodeFile(ava.getPath(), options);
-//            userView.setAvatar(bitmap);
-//        } else {
-//            dwld(user.getLogin(),user.getAvatar_url());
-//        }
 
-//        Glide.with(userView.ava).load(user.getAvatar_url()).into()
     }
 
-    void dwld(final String name, String url){
+    @Override
+    public void onShowListRepo(List<GitRepo> listRepo) {
+        userView.showUserRepoList(listRepo);
+    }
+
+    void dwld(final String name, String url) {
         GitApi downloadService = ApiManager.createService(GitApi.class);
 
         Call<ResponseBody> call = downloadService.dldFile(url);
@@ -70,7 +67,7 @@ public class UserPresenter implements IUserPresenter {
                 if (response.isSuccessful()) {
                     Log.d("ss", "server contacted and has file");
 
-                    boolean writtenToDisk = writeResponseBodyToDisk(name,response.body());
+                    boolean writtenToDisk = writeResponseBodyToDisk(name, response.body());
 
                     Log.d("ss", "file download was a success? " + writtenToDisk);
                 } else {
@@ -85,10 +82,10 @@ public class UserPresenter implements IUserPresenter {
         });
     }
 
-    private boolean writeResponseBodyToDisk(String name,ResponseBody body) {
+    private boolean writeResponseBodyToDisk(String name, ResponseBody body) {
         try {
             // todo change the file location
-            File futureStudioIconFile = new File(Environment.getExternalStorageDirectory() + File.separator + name+".png");
+            File futureStudioIconFile = new File(Environment.getExternalStorageDirectory() + File.separator + name + ".png");
 
             InputStream inputStream = null;
             OutputStream outputStream = null;

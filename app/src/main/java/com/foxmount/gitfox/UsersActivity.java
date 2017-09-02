@@ -2,6 +2,7 @@ package com.foxmount.gitfox;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -74,18 +75,6 @@ public class UsersActivity extends AppCompatActivity implements IUserListView {
     UserListPresenter ulPresenter;
 
 
-    Callback<List<GitRepo>> callback=new Callback<List<GitRepo>>() {
-        @Override
-        public void onResponse(Call<List<GitRepo>> call, Response<List<GitRepo>> response) {
-            Toast.makeText(UsersActivity.this, "oook", Toast.LENGTH_SHORT).show();
-
-        }
-
-        @Override
-        public void onFailure(Call<List<GitRepo>> call, Throwable t) {
-            Toast.makeText(UsersActivity.this, "oups", Toast.LENGTH_SHORT).show();
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -273,7 +262,7 @@ public class UsersActivity extends AppCompatActivity implements IUserListView {
 
     @Override
     public void showListUser(List<GitUser> lgu) {
-        guAdapter = new GitUserAdapter(ulPresenter, lgu,callback);
+        guAdapter = new GitUserAdapter(ulPresenter, lgu);
         rv.setAdapter(guAdapter);
     }
 
@@ -332,6 +321,16 @@ public class UsersActivity extends AppCompatActivity implements IUserListView {
 
     @Override
     public void clickSearch() {
+
+    }
+
+    @Override
+    public void clickUser(GitUser gu) {
+        Intent i=new Intent(UsersActivity.this, UserInfoActivity.class);
+        Bundle b=new Bundle();
+        b.putParcelable("gitUser",gu);
+        i.putExtra("gitUser",gu);
+        startActivity(i);
 
     }
 }

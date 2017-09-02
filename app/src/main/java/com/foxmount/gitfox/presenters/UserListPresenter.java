@@ -34,8 +34,9 @@ public class UserListPresenter implements IUserListPresenter {
     }
 
     @Override
-    public void onClickUser(GitUser user, Callback<List<GitRepo>> c) {
-        getRepoList(user.getLogin(),c);
+    public void onClickUser(GitUser user) {
+        ulView.clickUser(user);
+
     }
 
     @Override
@@ -95,14 +96,6 @@ public class UserListPresenter implements IUserListPresenter {
     }
 
 
-    private void getRepoList(String user, Callback<List<GitRepo>> c){
-        GitApi ga = ApiManager.createService(GitApi.class);
-
-        Call<List<GitRepo>> callp = ga.searchUserRep(user);
-
-
-        callp.enqueue(c);
-    }
 
     private void makeRequest(String query, Callback<GitRespUser> c) {
         onSetHomeIcon(R.drawable.ic_keyboard_backspace_white_24dp);

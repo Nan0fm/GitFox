@@ -44,6 +44,34 @@ public class GitUser implements Parcelable {
     public GitUser() {    }
 
 
+    protected GitUser(Parcel in) {
+        login = in.readString();
+        id = in.readInt();
+        avatar_url = in.readString();
+        gravatar_id = in.readString();
+        url = in.readString();
+        html_url = in.readString();
+        followers_url = in.readString();
+        subscriptions_url = in.readString();
+        organizations_url = in.readString();
+        repos_url = in.readString();
+        received_events_url = in.readString();
+        type = in.readString();
+        score = in.readDouble();
+    }
+
+    public static final Creator<GitUser> CREATOR = new Creator<GitUser>() {
+        @Override
+        public GitUser createFromParcel(Parcel in) {
+            return new GitUser(in);
+        }
+
+        @Override
+        public GitUser[] newArray(int size) {
+            return new GitUser[size];
+        }
+    };
+
     public String getLogin() {
         return login;
     }

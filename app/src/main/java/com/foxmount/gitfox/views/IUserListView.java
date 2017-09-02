@@ -24,6 +24,7 @@ public interface IUserListView extends IView {
     void clearSearch();
 
     void clickSearch();
+    void clickUser(GitUser gu);
 
 
 }

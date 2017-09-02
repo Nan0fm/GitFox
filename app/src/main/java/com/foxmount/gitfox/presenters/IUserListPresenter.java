@@ -17,7 +17,7 @@ import retrofit2.Callback;
 
 public interface IUserListPresenter {
 
-    void onClickUser(GitUser user, Callback<List<GitRepo>> c);
+    void onClickUser(GitUser user);
 
     void showUser(GitUser user);
 

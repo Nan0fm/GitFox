@@ -17,4 +17,33 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="AppTheme.NoActionBar.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.NoActionBar.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash</item>
+    </style>
+
+    <style name="NameUser">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textColor">@color/text_primary</item>
+        <item name="android:textSize">@dimen/text_main</item>
+
+    </style>
+
+    <style name="ScoreText">
+        <item name="android:gravity">right</item>
+        <item name="android:textColor">@color/text_accent</item>
+        <item name="android:textSize">@dimen/text_big</item>
+
+    </style>
+
+    <style name="SimpleText">
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textColor">@color/text_sub</item>
+        <item name="android:textSize">@dimen/text_simple</item>
+
+    </style>
+
 </resources>
