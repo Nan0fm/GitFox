@@ -34,7 +34,7 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoVh> {
     private int lph = -1;
 
 
-    public RepoAdapter( List<GitRepo> lgr) {
+    public RepoAdapter(List<GitRepo> lgr) {
 
         this.lgr = lgr;
 
@@ -49,9 +49,7 @@ public class RepoAdapter extends RecyclerView.Adapter<RepoVh> {
     public void onBindViewHolder(RepoVh holder, int position) {
 
         final GitRepo gu = lgr.get(position);
-
-
-
+        holder.setName(gu.getName());
         setAnimation(holder.itemView, position, lph);
 
     }
