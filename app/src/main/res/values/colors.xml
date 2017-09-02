@@ -4,6 +4,8 @@
     <color name="colorPrimaryDark">#365065</color>
     <color name="colorAccent">#5dbeb0</color>
 
+    <color name="text_primary">@color/colorPrimary</color>
+    <color name="text_sub">#b0bec5</color>
     <color name="gr_bckgr">#e9e9e2</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>

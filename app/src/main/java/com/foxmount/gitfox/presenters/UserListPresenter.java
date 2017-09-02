@@ -1,11 +1,15 @@
 package com.foxmount.gitfox.presenters;
 
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Toast;
 
 import com.foxmount.gitfox.R;
 import com.foxmount.gitfox.UsersActivity;
 import com.foxmount.gitfox.gitapi.ApiManager;
 import com.foxmount.gitfox.gitapi.GitApi;
+import com.foxmount.gitfox.templates.GitRepo;
 import com.foxmount.gitfox.templates.GitRespUser;
 import com.foxmount.gitfox.templates.GitUser;
 import com.foxmount.gitfox.templates.IMainTemplate;
@@ -30,8 +34,8 @@ public class UserListPresenter implements IUserListPresenter {
     }
 
     @Override
-    public void onClickUser(GitUser user) {
-
+    public void onClickUser(GitUser user, Callback<List<GitRepo>> c) {
+        getRepoList(user.getLogin(),c);
     }
 
     @Override
@@ -41,12 +45,13 @@ public class UserListPresenter implements IUserListPresenter {
 
     @Override
     public void onShowListUser(List<GitUser> lgu) {
-        ulView. showListUser(lgu);
+        ulView.showListUser(lgu);
+        ulView.hideEmptyView();
     }
 
     @Override
-    public void onShowEmptyList() {
-        ulView.showEmptyList();
+    public void onShowEmptyView(int idLayout) {
+        ulView.showEmptyView(idLayout);
     }
 
     @Override
@@ -61,7 +66,7 @@ public class UserListPresenter implements IUserListPresenter {
 
     @Override
     public void onClearSearch() {
-        ulView. clearSearch();
+        ulView.clearSearch();
     }
 
     @Override
@@ -71,7 +76,7 @@ public class UserListPresenter implements IUserListPresenter {
 
     @Override
     public void onClickSearch(String query, Callback<GitRespUser> c) {
-        makeRequest(query,  c);
+        makeRequest(query, c);
     }
 
     @Override
@@ -79,6 +84,25 @@ public class UserListPresenter implements IUserListPresenter {
         ulView.showError(error);
     }
 
+    @Override
+    public void onShowProgress() {
+        ulView.showProgress();
+    }
+
+    @Override
+    public void onHideProgress() {
+        ulView.hideProgress();
+    }
+
+
+    private void getRepoList(String user, Callback<List<GitRepo>> c){
+        GitApi ga = ApiManager.createService(GitApi.class);
+
+        Call<List<GitRepo>> callp = ga.searchUserRep(user);
+
+
+        callp.enqueue(c);
+    }
 
     private void makeRequest(String query, Callback<GitRespUser> c) {
         onSetHomeIcon(R.drawable.ic_keyboard_backspace_white_24dp);

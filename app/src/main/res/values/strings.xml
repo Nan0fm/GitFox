@@ -3,4 +3,7 @@
     <string name="action_settings">Settings</string>
     <string name="search">Искать</string>
     <string name="search_hint">Ищите пользователей github</string>
+    <string name="there_are_nobody">Тут никого нет</string>
+    <string name="how_to_search">Введите имя пользователя GitHub в строке поиска</string>
+    <string name="empty_list_image">Empty list image</string>
 </resources>

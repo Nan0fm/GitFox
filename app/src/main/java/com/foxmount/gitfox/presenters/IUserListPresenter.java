@@ -1,5 +1,8 @@
 package com.foxmount.gitfox.presenters;
 
+import android.view.View;
+
+import com.foxmount.gitfox.templates.GitRepo;
 import com.foxmount.gitfox.templates.GitRespUser;
 import com.foxmount.gitfox.templates.GitUser;
 import com.foxmount.gitfox.templates.IMainTemplate;
@@ -14,13 +17,13 @@ import retrofit2.Callback;
 
 public interface IUserListPresenter {
 
-    void onClickUser(GitUser user);
+    void onClickUser(GitUser user, Callback<List<GitRepo>> c);
 
     void showUser(GitUser user);
 
     void onShowListUser(List<GitUser> lgu);
 
-    void onShowEmptyList();
+    void onShowEmptyView(int idLayout);
 
     void onSetTitle(String title);
 
@@ -32,5 +35,9 @@ public interface IUserListPresenter {
 
     void onClickSearch(String query, Callback<GitRespUser> c);
     void onShowError(String error);
+    void onShowProgress();
+    void onHideProgress();
+
+
 
 }

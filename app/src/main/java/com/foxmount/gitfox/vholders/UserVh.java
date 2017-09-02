@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.foxmount.gitfox.R;
+import com.foxmount.gitfox.presenters.UserPresenter;
 import com.foxmount.gitfox.views.IUserView;
 
 import butterknife.BindView;
@@ -24,13 +25,15 @@ public class UserVh extends RecyclerView.ViewHolder implements IUserView,View.On
     protected TextView login;
     @BindView(R.id.score)
     protected TextView score;
-
+    private UserPresenter presenter;
+    private View mainView;
 
     public UserVh(View itemView) {
         super(itemView);
+        mainView=itemView;
         ButterKnife.bind(this, itemView);
 
-
+        itemView.setOnClickListener(this);
     }
 
     @Override
@@ -53,10 +56,15 @@ public class UserVh extends RecyclerView.ViewHolder implements IUserView,View.On
     public void onClick(View v) {
         int position = getAdapterPosition();
         if(position != RecyclerView.NO_POSITION) {
+
 //            SpacePhoto spacePhoto = mSpacePhotos[position];
 //            Intent intent = new Intent(v.getContext(), SpacePhotoActivity.class);
 //            intent.putExtra(SpacePhotoActivity.EXTRA_SPACE_PHOTO, spacePhoto);
 //            startActivity(intent);
         }
     }
+
+   public void setOnClickListener(View.OnClickListener cl){
+       mainView.setOnClickListener(cl);
+   }
 }

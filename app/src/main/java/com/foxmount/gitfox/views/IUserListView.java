@@ -1,5 +1,7 @@
 package com.foxmount.gitfox.views;
 
+import android.view.View;
+
 import com.foxmount.gitfox.templates.GitUser;
 
 import java.util.List;
@@ -12,7 +14,8 @@ public interface IUserListView extends IView {
 
     void showListUser(List<GitUser> lgu);
 
-    void showEmptyList();
+    void showEmptyView(int idLayout);
+    void hideEmptyView();
 
     void setTitle(String title);
 

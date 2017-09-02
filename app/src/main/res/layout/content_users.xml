@@ -4,14 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gr_bckgr"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.foxmount.gitfox.UsersActivity"
-    tools:showIn="@layout/activity_users"
-    android:background="@color/gr_bckgr">
+    tools:showIn="@layout/activity_users">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvUser"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
 
 </android.support.constraint.ConstraintLayout>

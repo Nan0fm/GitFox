@@ -14,9 +14,11 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -32,6 +34,7 @@ import com.foxmount.gitfox.adapters.GitUserAdapter;
 import com.foxmount.gitfox.gitapi.ApiManager;
 import com.foxmount.gitfox.gitapi.GitApi;
 import com.foxmount.gitfox.presenters.UserListPresenter;
+import com.foxmount.gitfox.templates.GitRepo;
 import com.foxmount.gitfox.templates.GitRespUser;
 import com.foxmount.gitfox.templates.GitUser;
 import com.foxmount.gitfox.views.IUserListView;
@@ -60,6 +63,8 @@ public class UsersActivity extends AppCompatActivity implements IUserListView {
 
     @BindView(R.id.rvUser)
     RecyclerView rv;
+    @BindView(R.id.container)
+    FrameLayout container;
 
     SearchView searchView;
     MenuItem myActionMenuItem;
@@ -67,6 +72,20 @@ public class UsersActivity extends AppCompatActivity implements IUserListView {
     GitUserAdapter guAdapter;
 
     UserListPresenter ulPresenter;
+
+
+    Callback<List<GitRepo>> callback=new Callback<List<GitRepo>>() {
+        @Override
+        public void onResponse(Call<List<GitRepo>> call, Response<List<GitRepo>> response) {
+            Toast.makeText(UsersActivity.this, "oook", Toast.LENGTH_SHORT).show();
+
+        }
+
+        @Override
+        public void onFailure(Call<List<GitRepo>> call, Throwable t) {
+            Toast.makeText(UsersActivity.this, "oups", Toast.LENGTH_SHORT).show();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +109,7 @@ public class UsersActivity extends AppCompatActivity implements IUserListView {
         GridLayoutManager glm = new GridLayoutManager(this, 2);
         LinearLayoutManager lManager = new LinearLayoutManager(this);
         rv.setLayoutManager(glm);
-
+        ulPresenter.onShowEmptyView(R.layout.empty_view);
 
     }
 
@@ -187,12 +206,14 @@ public class UsersActivity extends AppCompatActivity implements IUserListView {
             public boolean onQueryTextSubmit(String query) {
                 // Toast like print
                 ulPresenter.onSetHomeIcon(R.drawable.ic_keyboard_backspace_white_24dp);
-
+                ulPresenter.onShowProgress();
                 ulPresenter.onClickSearch(query, new Callback<GitRespUser>() {
                     @Override
                     public void onResponse(Call<GitRespUser> call, Response<GitRespUser> response) {
                         Toast.makeText(UsersActivity.this, "oook", Toast.LENGTH_SHORT).show();
                         ulPresenter.onShowListUser(response.body().getItems());
+                        ulPresenter.onHideProgress();
+
                     }
 
                     @Override
@@ -252,15 +273,29 @@ public class UsersActivity extends AppCompatActivity implements IUserListView {
 
     @Override
     public void showListUser(List<GitUser> lgu) {
-        guAdapter = new GitUserAdapter(lgu);
+        guAdapter = new GitUserAdapter(ulPresenter, lgu,callback);
         rv.setAdapter(guAdapter);
     }
 
     @Override
-    public void showEmptyList() {
-        List<GitUser> lgu = new ArrayList<>();
-        guAdapter = new GitUserAdapter(lgu);
-        rv.setAdapter(guAdapter);
+    public void showEmptyView(int idLayout) {
+        LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService
+                (Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.empty_view, null);
+
+        rv.setVisibility(View.GONE);
+        container.setVisibility(View.VISIBLE);
+        container.addView(view);
+
+
+//        List<GitUser> lgu = new ArrayList<>();
+//        guAdapter = new GitUserAdapter(lgu);
+//        rv.setAdapter(guAdapter);
+    }
+
+    @Override
+    public void hideEmptyView() {
+        container.setVisibility(View.GONE);
     }
 
     @Override
@@ -279,7 +314,9 @@ public class UsersActivity extends AppCompatActivity implements IUserListView {
         searchView.setQuery("", false);
         searchView.clearFocus();
         ulPresenter.onSetHomeIcon(R.drawable.ic_dashboard_white_24dp);
-
+        ulPresenter.onSetTitle(getString(R.string.app_name));
+        guAdapter.clear();
+        ulPresenter.onShowEmptyView(R.layout.empty_view);
     }
 
     @Override
