@@ -11,6 +11,6 @@ public interface IBasePresenter  {
     void onHideProgress();
 
     void onBackPress();
-    void onShowError();
+    void onShowError(String err);
 
 }

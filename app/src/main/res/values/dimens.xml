@@ -4,4 +4,12 @@
     <dimen name="text_big">28sp</dimen>
     <dimen name="text_simple">16sp</dimen>
     <dimen name="margin_text_left">18dp</dimen>
+    <dimen name="padding_normal">8dp</dimen>
+    <dimen name="margin_little">4dp</dimen>
+    <dimen name="padding_middle">8dp</dimen>
+    <dimen name="elevation">2dp</dimen>
+    <dimen name="margin_middle">8dp</dimen>
+    <dimen name="avatar_size">48dp</dimen>
+    <dimen name="margin_card">2dp</dimen>
+    <dimen name="avatar_big">72dp</dimen>
 </resources>

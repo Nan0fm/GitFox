@@ -9,6 +9,8 @@ import com.foxmount.gitfox.R;
 import com.foxmount.gitfox.UsersActivity;
 import com.foxmount.gitfox.gitapi.ApiManager;
 import com.foxmount.gitfox.gitapi.GitApi;
+import com.foxmount.gitfox.interactors.GetUsersInteractor;
+import com.foxmount.gitfox.interactors.IGetUsersInteractor;
 import com.foxmount.gitfox.templates.GitRepo;
 import com.foxmount.gitfox.templates.GitRespUser;
 import com.foxmount.gitfox.templates.GitUser;
@@ -25,7 +27,7 @@ import retrofit2.Response;
  * Created by A on 01.09.2017.
  */
 
-public class UserListPresenter implements IUserListPresenter {
+public class UserListPresenter implements IUserListPresenter, IGetUsersInteractor.Callback {
 
     private IUserListView ulView;
 
@@ -77,7 +79,10 @@ public class UserListPresenter implements IUserListPresenter {
 
     @Override
     public void onClickSearch(String query, Callback<GitRespUser> c) {
-        makeRequest(query, c);
+        GetUsersInteractor gui = new GetUsersInteractor(this, query);
+        gui.execute();
+
+
     }
 
     @Override
@@ -96,44 +101,13 @@ public class UserListPresenter implements IUserListPresenter {
     }
 
 
-
-    private void makeRequest(String query, Callback<GitRespUser> c) {
-        onSetHomeIcon(R.drawable.ic_keyboard_backspace_white_24dp);
-
-        GitApi ga = ApiManager.createService(GitApi.class);
-
-        Call<GitRespUser> callp = ga.searchUser(query);
-
-
-        callp.enqueue(c);
-// Execute the call asynchronously. Get a positive or negative callback.
-//        Subscription subscription = model.getRepoList(name)
-//                .map(repoListMapper)
-//                .subscribe(new Observer<List<Repository>>() {
-//
-//                    @Override
-//                    public void onCompleted() {
-//                        hideLoadingState();
-//                    }
-//
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        hideLoadingState();
-//                        showError(e);
-//                    }
-//
-//                    @Override
-//                    public void onNext(List<Repository> list) {
-//                        if (list != null && !list.isEmpty()) {
-//                            repoList = list;
-//                            view.showRepoList(list);
-//                        } else {
-//                            view.showEmptyList();
-//                        }
-//                    }
-//                });
-//        addSubscription(subscription);
+    @Override
+    public void onSuccess(List<GitUser> users) {
+        onShowListUser(users);
     }
 
-
+    @Override
+    public void onFail(String reason) {
+        ulView.showError(reason);
+    }
 }

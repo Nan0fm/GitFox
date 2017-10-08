@@ -16,9 +16,11 @@ import com.bumptech.glide.request.RequestOptions;
 import com.foxmount.gitfox.adapters.RepoAdapter;
 import com.foxmount.gitfox.gitapi.ApiManager;
 import com.foxmount.gitfox.gitapi.GitApi;
+import com.foxmount.gitfox.presenters.UserInfoActivityPresenter;
 import com.foxmount.gitfox.presenters.UserPresenter;
 import com.foxmount.gitfox.templates.GitRepo;
 import com.foxmount.gitfox.templates.GitUser;
+import com.foxmount.gitfox.views.IUserInfoActivityView;
 import com.foxmount.gitfox.views.IUserView;
 
 import java.util.List;
@@ -29,7 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class UserInfoActivity extends AppCompatActivity implements IUserView {
+public class UserInfoActivity extends AppCompatActivity implements IUserView, IUserInfoActivityView {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
@@ -45,32 +47,21 @@ public class UserInfoActivity extends AppCompatActivity implements IUserView {
     GitUser gu;
     private RepoAdapter repoAdapter;
     private UserPresenter presenter;
-
-    Callback<List<GitRepo>> callback = new Callback<List<GitRepo>>() {
-        @Override
-        public void onResponse(Call<List<GitRepo>> call, Response<List<GitRepo>> response) {
-            Toast.makeText(UserInfoActivity.this, "oook", Toast.LENGTH_SHORT).show();
-            presenter.onShowListRepo(response.body());
-        }
-
-        @Override
-        public void onFailure(Call<List<GitRepo>> call, Throwable t) {
-            Toast.makeText(UserInfoActivity.this, "oups", Toast.LENGTH_SHORT).show();
-        }
-    };
-
+    private UserInfoActivityPresenter actPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_info);
+        presenter = new UserPresenter(this);
+        actPresenter = new UserInfoActivityPresenter(this,this);
+        gu = (GitUser) getIntent().getParcelableExtra("gitUser");
         ButterKnife.bind(this);
+        actPresenter.setTitle(gu.getLogin());
         setSupportActionBar(toolbar);
 
-        gu = (GitUser) getIntent().getParcelableExtra("gitUser");
 
-        presenter = new UserPresenter(this);
-        presenter.showUser(gu);
+         presenter.showUser(gu);
 
         LinearLayoutManager lManager = new LinearLayoutManager(this);
         rvRepo.setLayoutManager(lManager);
@@ -84,7 +75,7 @@ public class UserInfoActivity extends AppCompatActivity implements IUserView {
                 .load(gu.getAvatar_url())
                 .apply(requestOptions)
                 .into(avatar);
-        getRepoList(gu.getLogin(), callback);
+        actPresenter.loadRepos(gu.getLogin());
     }
 
     @Override
@@ -102,18 +93,41 @@ public class UserInfoActivity extends AppCompatActivity implements IUserView {
         score.setText(scoreV);
     }
 
+
     @Override
-    public void showUserRepoList(List<GitRepo> listRepo) {
+    public void setTitle(String userName) {
+        toolbar.setTitle(userName);
+    }
+
+
+    @Override
+    public void showRepos(List<GitRepo> listRepo) {
         repoAdapter = new RepoAdapter(listRepo);
         rvRepo.setAdapter(repoAdapter);
     }
 
+    @Override
+    public void showProgress() {
 
-    private void getRepoList(String user, Callback<List<GitRepo>> c) {
-        GitApi ga = ApiManager.createService(GitApi.class);
-
-        Call<List<GitRepo>> callp = ga.searchUserRep(user);
-        callp.enqueue(c);
     }
 
+    @Override
+    public void hideProgress() {
+
+    }
+
+    @Override
+    public void showError(String error) {
+        Toast.makeText(this, error, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void clickHome() {
+
+    }
+
+    @Override
+    public void backPress() {
+        super.onBackPressed();
+    }
 }

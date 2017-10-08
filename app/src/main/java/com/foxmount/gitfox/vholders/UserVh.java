@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
  * Created by A on 31.08.2017.
  */
 
-public class UserVh extends RecyclerView.ViewHolder implements IUserView,View.OnClickListener {
+public class UserVh extends RecyclerView.ViewHolder implements IUserView, View.OnClickListener {
     @BindView(R.id.avatar)
     public ImageView avatar;
     @BindView(R.id.name)
@@ -33,7 +33,7 @@ public class UserVh extends RecyclerView.ViewHolder implements IUserView,View.On
 
     public UserVh(View itemView) {
         super(itemView);
-        mainView=itemView;
+        mainView = itemView;
         ButterKnife.bind(this, itemView);
 
         itemView.setOnClickListener(this);
@@ -54,16 +54,11 @@ public class UserVh extends RecyclerView.ViewHolder implements IUserView,View.On
         score.setText(value);
     }
 
-    @Override
-    public void showUserRepoList(List<GitRepo> listRepo) {
-       //tut nichego
-    }
-
 
     @Override
     public void onClick(View v) {
         int position = getAdapterPosition();
-        if(position != RecyclerView.NO_POSITION) {
+        if (position != RecyclerView.NO_POSITION) {
 
 //            SpacePhoto spacePhoto = mSpacePhotos[position];
 //            Intent intent = new Intent(v.getContext(), SpacePhotoActivity.class);
@@ -72,7 +67,7 @@ public class UserVh extends RecyclerView.ViewHolder implements IUserView,View.On
         }
     }
 
-   public void setOnClickListener(View.OnClickListener cl){
-       mainView.setOnClickListener(cl);
-   }
+    public void setOnClickListener(View.OnClickListener cl) {
+        mainView.setOnClickListener(cl);
+    }
 }

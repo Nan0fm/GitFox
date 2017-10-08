@@ -16,7 +16,7 @@ public interface IUserView {
     void setAvatar(Bitmap avatar);
     void setName(String name);
     void  setScore(String score);
-    void  showUserRepoList(List<GitRepo> listRepo);
+
 
 
 }

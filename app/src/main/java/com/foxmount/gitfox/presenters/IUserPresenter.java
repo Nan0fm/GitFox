@@ -15,5 +15,5 @@ public interface IUserPresenter {
 
     void showUser(GitUser user);
 
-    void onShowListRepo(List<GitRepo> listRepo);
+
 }

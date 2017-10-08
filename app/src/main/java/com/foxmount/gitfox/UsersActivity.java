@@ -91,8 +91,8 @@ public class UsersActivity extends AppCompatActivity implements IUserListView {
             @Override
             public void onClick(View view) {
 //                makeRequest();
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Snackbar.make(view, "Искать там, наверху, тут ничего нет =)", Snackbar.LENGTH_LONG)
+                        .setAction("Тык", null).show();
             }
         });
         GridLayoutManager glm = new GridLayoutManager(this, 2);
@@ -101,84 +101,6 @@ public class UsersActivity extends AppCompatActivity implements IUserListView {
         ulPresenter.onShowEmptyView(R.layout.empty_view);
 
     }
-
-//
-//    void dwld() {
-//        GitApi downloadService = ApiManager.createService(GitApi.class);
-//
-//        Call<ResponseBody> call = downloadService.dldFile("https://secure.gravatar.com/avatar/25c7c18223fb42a4c6ae1c8db6f50f9b?d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png");
-//
-//        call.enqueue(new Callback<ResponseBody>() {
-//            @Override
-//            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-//                if (response.isSuccessful()) {
-//                    Log.d("ss", "server contacted and has file");
-//
-//                    boolean writtenToDisk = writeResponseBodyToDisk(response.body());
-//
-//                    Log.d("ss", "file download was a success? " + writtenToDisk);
-//                } else {
-//                    Log.d("ss", "server contact failed");
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<ResponseBody> call, Throwable t) {
-//                Log.e("cc", "error");
-//            }
-//        });
-//    }
-//
-//    private boolean writeResponseBodyToDisk(ResponseBody body) {
-//        try {
-//            // todo change the file location/name according to your needs
-//            File futureStudioIconFile = new File(getExternalFilesDir(null) + File.separator + "gh.png");
-//
-//            InputStream inputStream = null;
-//            OutputStream outputStream = null;
-//
-//            try {
-//                byte[] fileReader = new byte[4096];
-//
-//                long fileSize = body.contentLength();
-//                long fileSizeDownloaded = 0;
-//
-//                inputStream = body.byteStream();
-//                outputStream = new FileOutputStream(futureStudioIconFile);
-//
-//                while (true) {
-//                    int read = inputStream.read(fileReader);
-//
-//                    if (read == -1) {
-//                        break;
-//                    }
-//
-//                    outputStream.write(fileReader, 0, read);
-//
-//                    fileSizeDownloaded += read;
-//
-//                    Log.d("cc", "file download: " + fileSizeDownloaded + " of " + fileSize);
-//                }
-//
-//                outputStream.flush();
-//
-//                return true;
-//            } catch (IOException e) {
-//                return false;
-//            } finally {
-//                if (inputStream != null) {
-//                    inputStream.close();
-//                }
-//
-//                if (outputStream != null) {
-//                    outputStream.close();
-//                }
-//            }
-//        } catch (IOException e) {
-//            return false;
-//        }
-//    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

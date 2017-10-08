@@ -13,9 +13,9 @@
         android:id="@+id/cardInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="2dp"
-        android:layout_marginRight="2dp"
-        android:layout_marginTop="2dp">
+        android:layout_marginLeft="@dimen/margin_card"
+        android:layout_marginRight="@dimen/margin_card"
+        android:layout_marginTop="@dimen/margin_card">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -27,8 +27,8 @@
 
             <ImageView
                 android:id="@+id/avatar"
-                android:layout_width="72dp"
-                android:layout_height="72dp"
+                android:layout_width="@dimen/avatar_big"
+                android:layout_height="@dimen/avatar_big"
                 app:srcCompat="@drawable/github_512" />
 
             <TextView
@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="@dimen/margin_text_left"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/margin_middle"
                 android:layout_toRightOf="@id/avatar"
                 android:text="name" />
 
@@ -48,10 +48,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/score"
-                android:layout_toRightOf="@id/avatar"
-                android:text="score"
                 android:layout_marginLeft="@dimen/margin_text_left"
-                />
+                android:layout_toRightOf="@id/avatar"
+                android:text="score" />
 
             <TextView
                 android:id="@id/score"
